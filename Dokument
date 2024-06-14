@@ -1,54 +1,85 @@
-Select dan Select Filter
+Mengenal MySQLi
 
-1. cara hapus table : DROP TABLE IF EXISTS users;
-2. cara cek tipe table : describe users;
-3. cara cek data table : select * from users;
+https://www.w3schools.com/php/php_ref_mysqli.asp
 
-Membuat Tabel :
+MySQLi adalah ekstensi PHP yang digunakan untuk berinteraksi dengan database MySQL.
 
-CREATE TABLE users (
-    id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+1. Dukungan Prepared Statements: MySQLi menyediakan dukungan untuk prepared statements, yang dapat membantu mencegah serangan SQL Injection.
+2. Dukungan Transact-SQL: MySQLi menyediakan dukungan untuk sintaks Transact-SQL, yang memungkinkan Anda menggunakan fitur-fitur lanjutan dari MySQL.
+3. Dukungan Multi-threading: MySQLi dapat bekerja dengan aplikasi multi-threading, yang membuatnya lebih scalable dan efisien.
+4. Dukungan untuk Fungsi-fungsi Lanjutan: MySQLi menyediakan dukungan untuk berbagai fungsi lanjutan, seperti pengambilan metadata, pemantauan koneksi, dan penanganan error yang lebih baik.
 
-==========================================
 
-SELECT biasa (tanpa filter): :
+===================
 
-SELECT * FROM users;
+contoh nya cara koneksi ke database :
 
-==============================
-SELECT dengan filter: 
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "my_database";
 
-SELECT * FROM users WHERE email LIKE '%@example.com';
-============================
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-Perbedaan utamanya adalah:
+// Memeriksa koneksi
+if ($conn->connect_error) {
+    echo "Gagal terhubung ke database!";
+    die("Connection failed: " . $conn->connect_error);
+} else {
+    echo "Berhasil terhubung ke database!";
+}
 
-SELECT biasa: Mengembalikan semua data tanpa filter.
-SELECT dengan filter: Mengembalikan data yang memenuhi kondisi filter yang diberikan.
+?>
 
-contoh lain nya :
+=================================================================
 
--- Filter berdasarkan kolom angka
-SELECT * FROM users WHERE age > 30;
+Code lengkapnya dengan penambahan query SELECT:
 
--- Filter berdasarkan kolom teks
-SELECT * FROM users WHERE name LIKE 'John%';
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "my_database";
 
--- Filter berdasarkan kombinasi kolom
-SELECT * FROM users WHERE email LIKE '%@example.com' AND age > 18;
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Memeriksa koneksi
+if ($conn->connect_error) {
+    echo "Gagal terhubung ke database!";
+    die("Connection failed: " . $conn->connect_error);
+} else {
+    echo "Berhasil terhubung ke database!<br>";
+
+    // Menjalankan query
+    $sql = "SELECT * FROM users";
+    $result = $conn->query($sql);
+
+    // Menampilkan hasil query
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "ID: " . $row["id"] . "<br>";
+            echo "Name: " . $row["name"] . "<br><br>";
+        }
+    } else {
+        echo "Tidak ada data.";
+    }
+}
+
+$conn->close();
+?>
 
 =================================================
 
 
+4. Menggunakan Prepared Statements
+Untuk mencegah serangan SQL Injection, disarankan untuk menggunakan Prepared Statements. Contohnya:
 
-Untuk mereset auto-increment pada kolom :
-Belum dapat cara nya tanpa hapus data nya
+5. Menangani Kesalahan
+Anda dapat menggunakan $conn->error untuk mendapatkan pesan error jika terjadi kesalahan saat menjalankan query.
 
-TRUNCATE TABLE users;
-ALTER TABLE users AUTO_INCREMENT = 1;
+6. Menutup Koneksi
+Setelah selesai, tutup koneksi database dengan $conn->close().
 
-===================================
+=========================================
+
