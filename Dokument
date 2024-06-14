@@ -1,4 +1,8 @@
-Membuat Table dan Tipe Data
+Insert to Table
+
+1. cara hapus table : DROP TABLE IF EXISTS users;
+2. cara cek tipe table : describe users;
+3. cara cek data table : select * from users;
 
 Membuat Tabel :
 
@@ -11,12 +15,9 @@ CREATE TABLE users (
 
 ==========================================
 
-Tipe Data Umum :
+Insert to Table :
 
-INT: bilangan bulat
-FLOAT, DOUBLE: bilangan desimal
-VARCHAR(n): string dengan panjang maksimal n karakter
-TEXT: string dengan panjang tidak terbatas
-BOOLEAN: nilai benar/salah
+INSERT INTO users (name, email)
+VALUES ('John Doe', 'john.doe@example.com');
 
 ==============================
