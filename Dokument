@@ -15,9 +15,11 @@ CREATE TABLE users (
 
 ==========================================
 
-Insert to Table :
+Update Data Table :
 
-INSERT INTO users (name, email)
-VALUES ('John Doe', 'john.doe@example.com');
+UPDATE users
+SET name = 'New Name', 
+    email = 'new_email@example.com'
+WHERE id = 1;
 
 ==============================
