@@ -1,11 +1,22 @@
-Membuat dan Menghapus Database
+Membuat Table dan Tipe Data
 
-Membuat Database :
+Membuat Tabel :
 
-CREATE DATABASE my_database;
+CREATE TABLE users (
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-Menghapus Database :
+==========================================
 
-DROP DATABASE my_database;
+Tipe Data Umum :
+
+INT: bilangan bulat
+FLOAT, DOUBLE: bilangan desimal
+VARCHAR(n): string dengan panjang maksimal n karakter
+TEXT: string dengan panjang tidak terbatas
+BOOLEAN: nilai benar/salah
 
 ==============================
