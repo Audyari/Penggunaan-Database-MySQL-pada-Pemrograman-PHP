@@ -1,4 +1,4 @@
-Insert to Table
+Delete Data Table
 
 1. cara hapus table : DROP TABLE IF EXISTS users;
 2. cara cek tipe table : describe users;
@@ -15,11 +15,17 @@ CREATE TABLE users (
 
 ==========================================
 
-Update Data Table :
+Delete Data Table :
 
-UPDATE users
-SET name = 'New Name', 
-    email = 'new_email@example.com'
+DELETE FROM users
 WHERE id = 1;
 
 ==============================
+
+Untuk mereset auto-increment pada kolom :
+Belum dapat cara nya tanpa hapus data nya
+
+TRUNCATE TABLE users;
+ALTER TABLE users AUTO_INCREMENT = 1;
+
+===================================
