@@ -1,0 +1,11 @@
+Membuat dan Menghapus Database
+
+Membuat Database :
+
+CREATE DATABASE my_database;
+
+Menghapus Database :
+
+DROP DATABASE my_database;
+
+==============================
