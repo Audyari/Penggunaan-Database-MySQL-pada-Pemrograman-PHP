@@ -1,77 +1,15 @@
-Menampilkan Data Karyawan
+Membuat Form Insert
 
 https://www.w3schools.com/php/php_ref_mysqli.asp
 
 MySQLi adalah ekstensi PHP yang digunakan untuk berinteraksi dengan database MySQL.
 
-1. Dukungan Prepared Statements: MySQLi menyediakan dukungan untuk prepared statements, yang dapat membantu mencegah serangan SQL Injection.
-2. Dukungan Transact-SQL: MySQLi menyediakan dukungan untuk sintaks Transact-SQL, yang memungkinkan Anda menggunakan fitur-fitur lanjutan dari MySQL.
-3. Dukungan Multi-threading: MySQLi dapat bekerja dengan aplikasi multi-threading, yang membuatnya lebih scalable dan efisien.
-4. Dukungan untuk Fungsi-fungsi Lanjutan: MySQLi menyediakan dukungan untuk berbagai fungsi lanjutan, seperti pengambilan metadata, pemantauan koneksi, dan penanganan error yang lebih baik.
 
 
-===================
-
-contoh nya cara koneksi ke database :
-
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "my_database";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Memeriksa koneksi
-if ($conn->connect_error) {
-    echo "Gagal terhubung ke database!";
-    die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "Berhasil terhubung ke database!";
-}
-
-?>
-
-=================================================================
-
-Code lengkapnya dengan penambahan query SELECT:
-
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "my_database";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Memeriksa koneksi
-if ($conn->connect_error) {
-    echo "Gagal terhubung ke database!";
-    die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "Berhasil terhubung ke database!<br>";
-
-    // Menjalankan query
-    $sql = "SELECT * FROM users";
-    $result = $conn->query($sql);
-
-    // Menampilkan hasil query
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "ID: " . $row["id"] . "<br>";
-            echo "Name: " . $row["name"] . "<br><br>";
-        }
-    } else {
-        echo "Tidak ada data.";
-    }
-}
-
-$conn->close();
-?>
 
 =================================================
 
-  **** code codepolitan menampilkan data :
+  **** code codepolitan Membuat Form Insert :
 
 buat 2 file : connection.php dan index.php
 
@@ -131,13 +69,15 @@ $results = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 ================================================
 
-Code Modifikasi :
+Code Modifikasi : buat 2 file index.php dan insert.php
+
+index.php : 
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Tampilkan Data Users</title>
+    <title>Tampilkan dan Tambah Data Users</title>
     <style>
         /* CSS Styles */
         body {
@@ -181,6 +121,35 @@ Code Modifikasi :
         tr:hover {
             background-color: #f5f5f5;
         }
+
+        .form-container {
+            margin-top: 50px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 
@@ -191,25 +160,27 @@ Code Modifikasi :
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>email</th>
-                <th>created_at</th>
-            </tr> <?php $servername = "localhost";
+                <th>Email</th>
+                <th>Created At</th>
+            </tr>
+            <?php
+            $servername = "localhost";
             $username = "root";
             $password = "";
             $dbname = "my_database";
 
             $conn = new mysqli($servername, $username, $password, $dbname);
 
-            // Memeriksa koneksi
+            // Check connection
             if ($conn->connect_error) {
                 echo "Gagal terhubung ke database!";
                 die("Connection failed: " . $conn->connect_error);
             } else {
-                // Menjalankan query
+                // Execute the query
                 $sql = "SELECT * FROM users";
                 $result = $conn->query($sql);
 
-                // Menampilkan hasil query
+                // Display the query results
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
@@ -220,17 +191,66 @@ Code Modifikasi :
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='2'>Tidak ada data.</td></tr>";
+                    echo "<tr><td colspan='4'>Tidak ada data.</td></tr>";
                 }
             }
 
             $conn->close();
             ?>
         </table>
+
+        <div class="form-container">
+            <h1>Tambah Data User</h1>
+            <form action="insert.php" method="post">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+                <button type="submit">Simpan</button>
+            </form>
+        </div>
     </div>
 </body>
 
 </html>
+
+=========================insert.php
+
+<?php
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "my_database";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    echo "Gagal terhubung ke database!";
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Retrieve data from the form
+$name = $_POST['name'];
+$email = $_POST['email'];
+
+// Prepare and execute the INSERT query
+$sql = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Data berhasil disimpan!";
+    header("Location: index.php"); // Redirect to the index.php page
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+// Close the database connection
+$conn->close();
+?>
+
+
 ======================================
 
 
